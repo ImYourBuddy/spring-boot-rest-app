@@ -29,12 +29,12 @@ public class PurchaseController {
         return ResponseEntity.ok().body(purchase);
     }
 
-    @DeleteMapping("/purchases")
+    @DeleteMapping("/purchases/{id}")
     public void deletePurchaseById(@PathVariable(value = "id") int id) {
         service.deletePurchaseById(id);
     }
 
-    @PostMapping("/purchase")
+    @PostMapping(value = "/purchases")
     public Purchase savePurchase(@RequestBody Purchase purchase) {
         return service.savePurchase(purchase);
     }
