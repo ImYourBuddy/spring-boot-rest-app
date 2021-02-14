@@ -1,6 +1,7 @@
 package com.imyourbuddy.service;
 
 import com.imyourbuddy.entity.Book;
+import com.imyourbuddy.exception.ResourceNotFoundException;
 import com.imyourbuddy.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +23,15 @@ public class BookService {
         return repository.findAll();
     }
 
-    public Book findBookById(int id) {
+    public Book findBookById(int id) throws ResourceNotFoundException {
         Optional<Book> optional = repository.findById(id);
-        return optional.orElse(new Book());
+        return optional.orElseThrow(() -> new ResourceNotFoundException("Book with id = " + id + "not found"));
     }
 
-    public void deleteById(int id) {
-        repository.deleteById(id);
+    public Book deleteById(int id) throws ResourceNotFoundException {
+        Book book = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book with id = " + id + "not found"));
+        repository.delete(book);
+        return book;
     }
 
     public Book save(Book book) {
