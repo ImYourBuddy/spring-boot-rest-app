@@ -1,8 +1,9 @@
 package com.imyourbuddy.controller;
 
+
 import com.imyourbuddy.entity.Buyer;
+import com.imyourbuddy.exception.ResourceNotFoundException;
 import com.imyourbuddy.service.BuyerService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,14 +23,13 @@ public class BuyerController {
     }
 
     @GetMapping("/buyers/{id}")
-    public ResponseEntity<Buyer> getBuyerById(@PathVariable(value = "id") int id) {
-        Buyer buyer = service.getBuyerById(id);
-        return ResponseEntity.ok().body(buyer);
+    public Buyer getBuyerById(@PathVariable(value = "id") int id) throws ResourceNotFoundException {
+       return service.getBuyerById(id);
     }
 
     @DeleteMapping("/buyers/{id}")
-    public void deleteBuyerById(@PathVariable(value = "id") int id) {
-        service.deleteBuyerById(id);
+    public Buyer deleteBuyerById(@PathVariable(value = "id") int id) throws ResourceNotFoundException {
+        return service.deleteBuyerById(id);
     }
 
     @PostMapping("/buyers")

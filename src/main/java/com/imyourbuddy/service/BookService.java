@@ -25,11 +25,13 @@ public class BookService {
 
     public Book findBookById(int id) throws ResourceNotFoundException {
         Optional<Book> optional = repository.findById(id);
-        return optional.orElseThrow(() -> new ResourceNotFoundException("Book with id = " + id + "not found"));
+        return optional
+                .orElseThrow(() -> new ResourceNotFoundException("Book with id = " + id + "not found"));
     }
 
     public Book deleteById(int id) throws ResourceNotFoundException {
-        Book book = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book with id = " + id + "not found"));
+        Book book = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Book with id = " + id + "not found"));
         repository.delete(book);
         return book;
     }
@@ -38,4 +40,7 @@ public class BookService {
         return repository.save(book);
     }
 
+    public void updateBookById(int id, String name, double price, String warehouse, int quantity) {
+        repository.updateById(id, name, price, warehouse, quantity);
+    }
 }

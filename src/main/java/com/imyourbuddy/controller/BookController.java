@@ -1,9 +1,9 @@
 package com.imyourbuddy.controller;
 
 import com.imyourbuddy.entity.Book;
+import com.imyourbuddy.exception.ResourceNotFoundException;
 import com.imyourbuddy.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,14 +24,13 @@ public class BookController {
     }
 
     @GetMapping("/books/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable(value = "id") int id) {
-        Book book = service.findBookById(id);
-        return ResponseEntity.ok().body(book);
+    public Book getBookById(@PathVariable(value = "id") int id) throws ResourceNotFoundException {
+        return service.findBookById(id);
     }
 
     @DeleteMapping("/books/{id}")
-    public void deleteBookById(@PathVariable(value = "id") int id) {
-        service.deleteById(id);
+    public Book deleteBookById(@PathVariable(value = "id") int id) throws ResourceNotFoundException {
+       return service.deleteById(id);
     }
 
     @PostMapping("/books")
@@ -39,4 +38,8 @@ public class BookController {
         return service.save(book);
     }
 
+    @PutMapping("/books/{id}")
+    public void updateBookById(@PathVariable(value = "id") int id, @RequestBody Book book) {
+        service.updateBookById(id, book.getName(), book.getPrice(), book.getWarehouse(), book.getQuantity());
+    }
 }

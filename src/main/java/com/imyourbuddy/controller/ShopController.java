@@ -3,9 +3,9 @@ package com.imyourbuddy.controller;
 
 
 import com.imyourbuddy.entity.Shop;
+import com.imyourbuddy.exception.ResourceNotFoundException;
 import com.imyourbuddy.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,14 +26,13 @@ public class ShopController {
     }
 
     @GetMapping("/shops/{id}")
-    public ResponseEntity<Shop> getShopById(@PathVariable(value = "id") int id) {
-        Shop shop = service.getShopById(id);
-        return ResponseEntity.ok().body(shop);
+    public Shop getShopById(@PathVariable(value = "id") int id) throws ResourceNotFoundException {
+        return service.getShopById(id);
     }
 
     @DeleteMapping("/shops/{id}")
-    public void deleteShopById(@PathVariable(value = "id") int id) {
-        service.deleteShopById(id);
+    public Shop deleteShopById(@PathVariable(value = "id") int id) throws ResourceNotFoundException {
+        return service.deleteShopById(id);
     }
 
     @PostMapping("/shops")

@@ -1,6 +1,7 @@
 package com.imyourbuddy.service;
 
 import com.imyourbuddy.entity.Buyer;
+import com.imyourbuddy.exception.ResourceNotFoundException;
 import com.imyourbuddy.repository.BuyerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,17 @@ public class BuyerService {
         return repository.findAll();
     }
 
-    public Buyer getBuyerById(int id) {
+    public Buyer getBuyerById(int id) throws ResourceNotFoundException {
         Optional<Buyer> optional = repository.findById(id);
-        return optional.orElse(new Buyer());
+        return optional
+                .orElseThrow(() -> new ResourceNotFoundException("Buyer with id = " + id + "not found"));
     }
 
-    public void deleteBuyerById(int id) {
-        repository.deleteById(id);
+    public Buyer deleteBuyerById(int id) throws ResourceNotFoundException {
+        Buyer buyer = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Buyer with id = " + id + "not found"));
+        repository.delete(buyer);
+        return buyer;
     }
 
     public Buyer saveBuyer(Buyer buyer) {
