@@ -1,39 +1,44 @@
-package com.imyourbuddy.controller;
+package com.imyourbuddy.service;
 
-import com.imyourbuddy.entity.Buyer;
-import com.imyourbuddy.service.BuyerService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import com.imyourbuddy.entity.Book;
+import com.imyourbuddy.exception.ResourceNotFoundException;
+import com.imyourbuddy.repository.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 
 import java.util.List;
+import java.util.Optional;
 
-@RestController
-@RequestMapping("/rest")
-public class BuyerController {
-    private final BuyerService service;
+@Service
+public class BookService {
+    private final BookRepository repository;
 
-    public BuyerController(BuyerService service) {
-        this.service = service;
+    @Autowired
+    public BookService(BookRepository repository) {
+        this.repository = repository;
     }
 
-    @GetMapping("/buyers")
-    public List<Buyer> getAllBuyers() {
-        return service.getAllBuyers();
+    public List<Book> findAllBooks() {
+        return repository.findAll();
     }
 
-    @GetMapping("/buyers/{id}")
-    public ResponseEntity<Buyer> getBuyerById(@PathVariable(value = "id") int id) {
-        Buyer buyer = service.getBuyerById(id);
-        return ResponseEntity.ok().body(buyer);
+    public Book findBookById(int id) throws ResourceNotFoundException {
+        Optional<Book> optional = repository.findById(id);
+        return optional.orElseThrow(() -> new ResourceNotFoundException("Book with id = " + id + "not found"));
     }
 
-    @DeleteMapping("/buyers/{id}")
-    public void deleteBuyerById(@PathVariable(value = "id") int id) {
-        service.deleteBuyerById(id);
+    public Book deleteById(int id) throws ResourceNotFoundException {
+        Book book = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book with id = " + id + "not found"));
+        repository.delete(book);
+        return book;
     }
 
-    @PostMapping("/buyers")
-    public Buyer saveBuyer(@RequestBody Buyer buyer) {
-        return service.saveBuyer(buyer);
+    public Book save(Book book) {
+        return repository.save(book);
+    }
+
+    public void updateBookById(int id, String name, double price, String warehouse, int quantity) {
+        repository.updateById(id, name, price, warehouse, quantity);
     }
 }
