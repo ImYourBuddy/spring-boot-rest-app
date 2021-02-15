@@ -1,6 +1,7 @@
 package com.imyourbuddy.service;
 
 import com.imyourbuddy.entity.Shop;
+import com.imyourbuddy.exception.ResourceNotFoundException;
 import com.imyourbuddy.repository.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,13 +22,17 @@ public class ShopService {
         return repository.findAll();
     }
 
-    public Shop getShopById(int id) {
+    public Shop getShopById(int id) throws ResourceNotFoundException {
         Optional<Shop> optional = repository.findById(id);
-        return optional.orElse(new Shop());
+        return optional
+                .orElseThrow(() -> new ResourceNotFoundException("Shop with id = " + id + "not found"));
     }
 
-    public void deleteShopById(int id) {
-        repository.deleteById(id);
+    public Shop deleteShopById(int id) throws ResourceNotFoundException {
+        Shop shop = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Shop with id = " + id + "not found"));
+        repository.delete(shop);
+        return shop;
     }
 
     public Shop saveShop(Shop shop) {

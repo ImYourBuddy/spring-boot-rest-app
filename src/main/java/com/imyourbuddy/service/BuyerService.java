@@ -24,11 +24,13 @@ public class BuyerService {
 
     public Buyer getBuyerById(int id) throws ResourceNotFoundException {
         Optional<Buyer> optional = repository.findById(id);
-        return optional.orElseThrow(() -> new ResourceNotFoundException("Buyer with id = " + id + "not found"));
+        return optional
+                .orElseThrow(() -> new ResourceNotFoundException("Buyer with id = " + id + "not found"));
     }
 
     public Buyer deleteBuyerById(int id) throws ResourceNotFoundException {
-        Buyer buyer = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Buyer with id = " + id + "not found"));
+        Buyer buyer = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Buyer with id = " + id + "not found"));
         repository.delete(buyer);
         return buyer;
     }
