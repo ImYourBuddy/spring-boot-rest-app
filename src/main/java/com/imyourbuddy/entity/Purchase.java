@@ -26,5 +26,5 @@ public class Purchase {
     private int quantity;
 
     @Column(name = "total_price")
-    private double totalPrice;
+    private Double totalPrice;
 }

@@ -37,4 +37,24 @@ public class BookController {
     public Book saveBook(@RequestBody Book book) {
         return service.save(book);
     }
+
+    @PutMapping("/books/{id}")
+    public Book updateBookById(@PathVariable(value = "id") int id, @RequestBody Book book) throws ResourceNotFoundException {
+        return service.updateBookById(id, book);
+    }
+
+    @PatchMapping("/books/{id}")
+    public Book partUpdateBookById(@PathVariable(value = "id") int id, @RequestBody Book book) throws ResourceNotFoundException {
+        return service.partUpdateBookById(id, book);
+    }
+
+    @GetMapping("/books/dist")
+    public List<String> getAllDistinctBooks() {
+        return service.getAllDistinctBooks();
+    }
+
+    @GetMapping("/books/special")
+    public List<String> getSpecialBooks() {
+        return service.getSpecialBooks();
+    }
 }

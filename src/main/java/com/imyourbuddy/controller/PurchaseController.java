@@ -37,4 +37,29 @@ public class PurchaseController {
     public Purchase savePurchase(@RequestBody Purchase purchase) {
         return service.savePurchase(purchase);
     }
+
+    @PutMapping("/purchases/{id}")
+    public Purchase updatePurchaseById(@PathVariable(value = "id") int id, @RequestBody Purchase purchase) throws ResourceNotFoundException {
+        return service.updatePurchaseById(id, purchase);
+    }
+
+    @PatchMapping("/purchases/{id}")
+    public Purchase partUpdatePurchaseById(@PathVariable(value = "id") int id, @RequestBody Purchase purchase) throws ResourceNotFoundException {
+        return service.partUpdatePurchaseById(id, purchase);
+    }
+
+    @GetMapping("/purchases/months")
+    public List<Integer> getAllDistinctMonths() {
+        return service.getAllDistinctMonths();
+    }
+
+    @GetMapping("/purchases/buyer-shop")
+    public List<String> getBuyerAndShop() {
+        return service.getBuyerAndShop();
+    }
+
+    @GetMapping("purchases/special")
+    public List<String> getSpecialPurchase() {
+        return service.getSpecialPurchase();
+    }
 }

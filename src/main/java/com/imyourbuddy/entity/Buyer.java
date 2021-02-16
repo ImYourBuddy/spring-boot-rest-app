@@ -18,5 +18,5 @@ public class Buyer {
 
     private String geography;
 
-    private double discount;
+    private Double discount;
 }

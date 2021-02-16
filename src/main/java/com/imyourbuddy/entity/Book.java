@@ -14,9 +14,9 @@ public class Book {
 
     private String name;
 
-    private double price;
+    private Double price;
 
     private String warehouse;
 
-    private int quantity;
+    private Integer quantity;
 }

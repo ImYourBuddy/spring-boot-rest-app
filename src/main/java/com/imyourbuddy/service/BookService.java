@@ -40,7 +40,39 @@ public class BookService {
         return repository.save(book);
     }
 
-    public void updateBookById(int id, String name, double price, String warehouse, int quantity) {
-        repository.updateById(id, name, price, warehouse, quantity);
+    public Book updateBookById(int id, Book updatedBook) throws ResourceNotFoundException {
+        Book book = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Book with id = " + id + "not found"));
+        book.setName(updatedBook.getName());
+        book.setPrice(updatedBook.getPrice());
+        book.setWarehouse(updatedBook.getWarehouse());
+        book.setQuantity(updatedBook.getQuantity());
+        return repository.save(book);
+    }
+
+    public Book partUpdateBookById(int id, Book updatedBook) throws ResourceNotFoundException {
+        Book book = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Book with id = " + id + "not found"));
+        if (updatedBook.getName() != null) {
+            book.setName(updatedBook.getName());
+        }
+        if (updatedBook.getPrice() != null) {
+            book.setPrice(updatedBook.getPrice());
+        }
+        if (updatedBook.getWarehouse() != null) {
+            book.setWarehouse(updatedBook.getWarehouse());
+        }
+        if (updatedBook.getQuantity() != null) {
+            book.setQuantity(updatedBook.getQuantity());
+        }
+        return repository.save(book);
+    }
+
+    public List<String> getAllDistinctBooks() {
+        return repository.findAllDistinctBooks();
+    }
+
+    public List<String> getSpecialBooks() {
+        return repository.findSpecialBooks();
     }
 }

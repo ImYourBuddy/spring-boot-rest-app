@@ -16,5 +16,5 @@ public class Shop {
 
     private String geography;
 
-    private double commission;
+    private Double commission;
 }

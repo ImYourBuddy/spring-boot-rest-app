@@ -36,4 +36,25 @@ public class BuyerController {
     public Buyer saveBuyer(@RequestBody Buyer buyer) {
         return service.saveBuyer(buyer);
     }
+
+    @PutMapping("/buyers/{id}")
+    public Buyer updateBuyerById(@PathVariable(value = "id") int id, @RequestBody Buyer buyer) throws ResourceNotFoundException {
+        return service.updateBuyerById(id, buyer);
+    }
+
+    @PatchMapping("/buyers/{id}")
+    public Buyer partUpdateBuyerById(@PathVariable(value = "id") int id, @RequestBody Buyer buyer) throws ResourceNotFoundException {
+        return service.partUpdateBuyerById(id, buyer);
+    }
+
+    @GetMapping("/buyers/districts")
+    public List<String> getAllDistinctDistricts() {
+        return service.getAllDistinctDistricts();
+    }
+
+    @GetMapping("/buyers/nizh")
+    public List<String> getAllByNizhDist() {
+        return service.getAllByNizhDist();
+    }
+
 }

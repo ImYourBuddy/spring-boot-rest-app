@@ -38,4 +38,36 @@ public class BuyerService {
     public Buyer saveBuyer(Buyer buyer) {
         return repository.save(buyer);
     }
+
+    public Buyer updateBuyerById(int id, Buyer updatedBuyer) throws ResourceNotFoundException {
+        Buyer buyer = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Buyer with id = " + id + "not found"));
+        buyer.setLastName(updatedBuyer.getLastName());
+        buyer.setGeography(updatedBuyer.getGeography());
+        buyer.setDiscount(updatedBuyer.getDiscount());
+        return repository.save(buyer);
+    }
+
+    public Buyer partUpdateBuyerById(int id, Buyer updatedBuyer) throws ResourceNotFoundException {
+        Buyer buyer = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Buyer with id = " + id + "not found"));
+        if (updatedBuyer.getLastName() != null) {
+            buyer.setLastName(updatedBuyer.getLastName());
+        }
+        if (updatedBuyer.getGeography() != null) {
+            buyer.setGeography(updatedBuyer.getGeography());
+        }
+        if (updatedBuyer.getDiscount() != null) {
+            buyer.setDiscount(updatedBuyer.getDiscount());
+        }
+        return repository.save(buyer);
+    }
+
+    public List<String> getAllDistinctDistricts() {
+        return repository.findAllDistinctDistricts();
+    }
+
+    public List<String> getAllByNizhDist() {
+        return repository.findAllByNizhDist();
+    }
 }

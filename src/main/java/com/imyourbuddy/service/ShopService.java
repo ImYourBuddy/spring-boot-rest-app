@@ -38,4 +38,32 @@ public class ShopService {
     public Shop saveShop(Shop shop) {
         return repository.save(shop);
     }
+
+    public Shop updateShopById(int id, Shop updatedShop) throws ResourceNotFoundException {
+        Shop shop = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Shop with id = " + id + "not found"));
+        shop.setName(updatedShop.getName());
+        shop.setGeography(updatedShop.getGeography());
+        shop.setCommission(updatedShop.getCommission());
+        return repository.save(shop);
+    }
+
+    public Shop partUpdateShopById(int id, Shop updatedShop) throws ResourceNotFoundException {
+        Shop shop = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Shop with id = " + id + "not found"));
+        if (updatedShop.getName() != null) {
+            shop.setName(updatedShop.getName());
+        }
+        if (updatedShop.getGeography() != null) {
+            shop.setGeography(updatedShop.getGeography());
+        }
+        if (updatedShop.getCommission() != null) {
+            shop.setCommission(updatedShop.getCommission());
+        }
+        return repository.save(shop);
+    }
+
+    public List<String> getLocalShop() {
+        return repository.findLocalShop();
+    }
 }
