@@ -62,4 +62,23 @@ public class PurchaseController {
     public List<String> getSpecialPurchase() {
         return service.getSpecialPurchase();
     }
+
+    @GetMapping("/purchases/expensive")
+    public List<String> getExpensivePurchases() {
+        return service.getExpensivePurchases();
+    }
+
+    @GetMapping("/purchases/dist")
+    public List<String> getPurchasesInDist() {
+        return service.getPurchasesInDist();
+    }
+    @GetMapping("/purchases/not-avtoz")
+    public List<String> getPurchasesNotInAvtoz() {
+        return service.getPurchasesNotInAvtoz();
+    }
+
+    @GetMapping("/purchases/storage")
+    public List<String> getPurchasesInStorage() {
+        return service.getPurchasesInStorage();
+    }
 }
