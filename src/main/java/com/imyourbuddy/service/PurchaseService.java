@@ -86,4 +86,20 @@ public class PurchaseService {
     public List<String> getSpecialPurchase() {
         return repository.findSpecialPurchase();
     }
+
+    public List<String> getExpensivePurchases() {
+        return repository.findExpensivePurchases();
+    }
+
+    public List<String> getPurchasesInDist() {
+        return repository.findPurchasesInDist();
+    }
+
+    public List<String> getPurchasesNotInAvtoz() {
+        return repository.findPurchasesNotInAvtoz();
+    }
+
+    public List<String> getPurchasesInStorage() {
+        return repository.findPurchasesInStorage();
+    }
 }
